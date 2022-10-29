@@ -1,1 +1,3 @@
-# CB-API-TinyPointOfSale.Android.iOS-
+# CB-API-TinyPointOfSale.Android.iOS
+
+COMING SOON: Sample code for Android/iOS sample...
