@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:thisApp="clr-namespace:CloudbedsTinyPOS_Mobile"
+             x:Class="CloudbedsTinyPOS_Mobile.MainPage" BackgroundColor="#ffffff">
+
+    <StackLayout>
+        <StackLayout x:Name="groupNavPreviousNext" IsVisible="false"  Orientation="Horizontal">
+            <Button x:Name="btnStateNav_Previous" Text="&lt;" WidthRequest="60" Clicked="btnStateNav_Previous_Clicked"></Button>
+            <Button x:Name="btnStateNav_Advance" Text="Start" HorizontalOptions="EndAndExpand" WidthRequest="200" Clicked="btnStateNav_Advance_Clicked" ></Button>
+        </StackLayout>
+
+        <ScrollView x:Name="ctlMainScrollArea">
+            <StackLayout>
+                
+                <!-- The per-page content for the application gets placed inside this StackLayout contro-->
+                <StackLayout x:Name="uiStackDyamicContent">
+                    <thisApp:uiAppHomePage StartAppWithFakeData="uiAppHomePage_StartAppWithFakeData" StartAppWithRealData="uiAppHomePage_StartAppWithRealData"></thisApp:uiAppHomePage>
+                </StackLayout>
+
+                <!--Spacer-->
+                <Grid Margin="0,5" Padding="0" BackgroundColor="#2196F3">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Text="" Padding="0" Margin="0"></Label>
+                </Grid>
+
+                <!-- FOOTER-->
+                <Frame BackgroundColor="#ffffff" Padding="24" CornerRadius="0" Margin="0">
+                    <StackLayout>
+                        <Label  TextColor="#2196F3" FontSize="Small" FontAttributes="Bold" HorizontalTextAlignment="Center" Text="Cloudbeds TinyPOS Mobile Sample"></Label>
+                        <Label TextColor="#2196F3" HorizontalTextAlignment="Center">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Enjoy the application! You can give feedback in "></Span>
+                                    <Span Text="Cloudbeds' GitHub site." TextDecorations="Underline">
+                                        <Span.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="TapGestureRecognizer_TappedGiveApplicationFeedback" />
+                                        </Span.GestureRecognizers>
+                                    </Span>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                    </StackLayout>
+                </Frame>
+                <!--
+                <Label FontSize="16" Padding="30,24,30,0">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <FormattedString.Spans>
+                                <Span Text="Learn more at "/>
+                                <Span Text="https://aka.ms/xamarin-quickstart" FontAttributes="Bold"/>
+                            </FormattedString.Spans>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                -->
+            </StackLayout>
+        </ScrollView>
+    </StackLayout>
+
+</ContentPage>

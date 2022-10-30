@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" Version="7.0.0-rc.2.22472.3" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2515" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="UI\uiPosOrderListItemHeader.xaml.cs">
+      <DependentUpon>uiPosOrderListItemHeader.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\uiAppHomePage.xaml.cs">
+      <DependentUpon>uiAppHomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\uiPosOrderStartPage.xaml.cs">
+      <DependentUpon>uiPosOrderStartPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\uiPosOrderSummary.xaml.cs">
+      <DependentUpon>uiPosOrderSummary.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\uiPosGratuityChooser.xaml.cs">
+      <DependentUpon>uiPosGratuityChooser.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\uiGuestListItem.xaml.cs">
+      <DependentUpon>uiGuestListItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\uiGuestList.xaml.cs">
+      <DependentUpon>uiGuestList.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\uiPosOrderListItem.xaml.cs">
+      <DependentUpon>uiPosOrderListItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\uiPosOrderList.xaml.cs">
+      <DependentUpon>uiPosOrderList.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+</Project>

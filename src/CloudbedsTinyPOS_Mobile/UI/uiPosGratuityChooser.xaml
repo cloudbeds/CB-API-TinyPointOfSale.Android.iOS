@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CloudbedsTinyPOS_Mobile.uiPosGratuityChooser">
+
+    <Frame BackgroundColor="#2196F3" Padding="5" CornerRadius="0" Margin="0">
+        <Label x:Name="txtGratuitySummary" TextColor="White" FontSize="Medium" FontAttributes="Bold" Text="GRATUITY SUMMARY HERE" ></Label>
+    </Frame>
+
+    <StackLayout Margin="5,0">
+        <Label FontSize="Large" FontAttributes="Bold" >Choose Gratuity</Label>
+
+        <Button x:Name="btnTip25Commit" Clicked="btnTip25Commit_Click" Text="25%" FontSize="Medium"></Button>
+
+        <Button  x:Name="btnTip20Commit" Clicked="btnTip20Commit_Click" Text="20%" FontSize="Medium"></Button>
+
+        <Button  x:Name="btnTip18Commit" Clicked="btnTip18Commit_Click"  Text="18%" FontSize="Medium"></Button>
+
+        <Button x:Name="btnTip0Commit" Clicked="btnTip0Commit_Click" Text="No Tip ($0)"  FontSize="Medium"></Button>
+
+        <StackLayout Orientation="Horizontal">
+            <Label x:Name="txtCustomTipCurrency" FontSize="Large" VerticalTextAlignment="Center" VerticalOptions="CenterAndExpand" >$$$</Label>
+            <Entry x:Name="txtCustomTipAmount" FontSize="Large" FontAttributes="Bold" WidthRequest="100"></Entry>
+            <Button x:Name="btnCutomTipAmount" FontSize="Medium" Clicked="btnCutomTipAmount_Click" Text="Set Tip"></Button>
+        </StackLayout>
+
+    </StackLayout>
+
+
+
+</StackLayout>

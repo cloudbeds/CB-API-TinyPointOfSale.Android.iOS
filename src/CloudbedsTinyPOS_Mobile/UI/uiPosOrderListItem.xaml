@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Grid xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CloudbedsTinyPOS_Mobile.uiPosOrderListItem" >
+
+    <Grid.GestureRecognizers>
+        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"></TapGestureRecognizer>
+    </Grid.GestureRecognizers>
+    <Grid.RowDefinitions>
+        <RowDefinition></RowDefinition>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="5"></ColumnDefinition>
+        <ColumnDefinition Width="195"></ColumnDefinition>
+        <ColumnDefinition Width="0"></ColumnDefinition>
+        <ColumnDefinition Width="40"></ColumnDefinition>
+        <ColumnDefinition Width="40"></ColumnDefinition>
+    </Grid.ColumnDefinitions>
+
+    <Label x:Name="txtPosItemName" Grid.Row="0" Grid.Column="1" Text="--POS item name--" FontSize="Medium" FontAttributes="Bold" ></Label>
+    <Label x:Name="txtPosItemCategory" Grid.Row="0" Grid.Column="2" Text="--POS item name--" FontSize="Small" IsVisible="False"></Label>
+
+    <Button x:Name="btnAddItems" Text="+"  Grid.Row="0" Grid.Column="3" Background="#E0E0FF" Clicked="btnAddItems_Click" Padding="0" Margin="0" FontSize="Medium" FontAttributes="Bold"></Button>
+
+    <Button x:Name="btnRemoveItems" Text="-"  Grid.Row="0" Grid.Column="4" Background="#FFD0D0" Clicked="btnRemoveItems_Click"  Padding="0" Margin="0" FontSize="Medium" FontAttributes="Bold"></Button>
+
+</Grid>

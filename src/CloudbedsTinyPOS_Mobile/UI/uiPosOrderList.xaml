@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CloudbedsTinyPOS_Mobile.uiPosOrderList" Padding="0" Margin="0">
+
+    <Frame BackgroundColor="#2196F3" Padding="5" CornerRadius="0" Margin="0">
+        <Label x:Name="txtSummaryText" Text="Pre-tax/tip total: XXXX" TextColor="White" FontSize="Medium" FontAttributes="Bold"></Label>
+    </Frame>
+
+    <StackLayout x:Name="spListOfPosOrderItems" Padding="0" Margin="0">
+        <Label Text="fill me: list of menu items here"></Label>
+    </StackLayout>
+
+</StackLayout>

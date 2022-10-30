@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CloudbedsTinyPOS_Mobile.uiGuestListItem" Margin="5,0" Padding="0">
+
+    <Grid Margin="0" Padding="1">
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"></TapGestureRecognizer>
+        </Grid.GestureRecognizers>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition ></ColumnDefinition>
+            <ColumnDefinition Width="5"></ColumnDefinition>
+            <ColumnDefinition Width="40"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <StackLayout Grid.Row="0" Grid.Column="0">
+            <Label x:Name="txtGuestName" FontSize="Medium" TextColor="#303030" Margin="0" Padding="0">fill: name</Label>
+            <Label x:Name="txtGuestRoomNumber" FontSize="Small" TextColor="#808080" Margin="0" Padding="0">fill: room</Label>
+        </StackLayout>
+        <Label x:Name="txtIsSelectedMarker" Grid.Row="0" Grid.Column="2" TextColor="#008000" FontAttributes="Bold">XX</Label>
+    </Grid>
+
+    <!-- Small border on bottom-->
+    <Grid BackgroundColor="#e8e8e8" Padding="0,0" Margin="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <!-- Put an element in to force the grid to show-->
+        <Label Grid.Column="0" Grid.Row="0" ></Label> 
+    </Grid>
+</StackLayout>

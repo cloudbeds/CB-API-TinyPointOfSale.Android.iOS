@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CloudbedsTinyPOS_Mobile.uiAppHomePage">
+
+    <Frame BackgroundColor="#2196F3" Padding="5" CornerRadius="0" Margin="0">
+        <Label x:Name="txtSummary" TextColor="White" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center" Text="Cloudbeds TinyPointOfSale (Mobile) Example" >
+        </Label>
+    </Frame>
+
+    <StackLayout Margin="5, 0">
+        <Button x:Name="btnStartAndConnectToCloudbeds" Text="Start: Use REAL data" Clicked="btnStartAndConnectToCloudbeds_Clicked"></Button>
+        <Button x:Name="btnStartWithTestData" Text="Start: Use FAKE Data" Clicked="btnStartWithTestData_Clicked"></Button>
+
+        <Button x:Name="btnImportAppConfig" Text="Import: App Config" Clicked="btnImportAppConfig_Clicked"></Button>
+        <Button x:Name="btnImportAuthSessionSecrets" Text="Import: Auth Secrets" Clicked="btnImportAuthSessionSecrets_Clicked"></Button>
+
+        <Label x:Name="txtStatusUpdatesHere" FontSize="Small">Command status shown here...</Label>
+
+        <Frame BackgroundColor="#A0A0C0" Padding="24" CornerRadius="0" Margin="0">
+            <StackLayout Margin="0" Padding="0">
+                <Label  TextColor="#FFFFFF" FontSize="Small" FontAttributes="Bold" HorizontalTextAlignment="Center" Text="File I/O"></Label>
+
+                <Editor x:Name="txtTransferToFrom" HeightRequest="60" AutoSize="TextChanges" FontSize="Small" Background="#FFFFE0" Margin="0" Text="Select and PASTE over this"></Editor>
+            </StackLayout>
+        </Frame>
+        <Button x:Name="btnClearTransferText" Text="Clear text" Clicked="btnClearTransferText_Clicked"></Button>
+    </StackLayout>
+
+</StackLayout>

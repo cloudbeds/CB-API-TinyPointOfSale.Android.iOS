@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CloudbedsTinyPOS_Mobile.uiPosOrderSummary">
+
+    <Frame BackgroundColor="#2196F3" Padding="5" CornerRadius="0" Margin="0">
+        <Label x:Name="txtGratuitySummary" TextColor="White" FontSize="Medium" FontAttributes="Bold" Text="GRATUITY SUMMARY HERE" >
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span>Order total: </Span>
+                    <Span x:Name="txtPOSSubmit_Total">xxxxx</Span>
+                </FormattedString>
+            </Label.FormattedText>            
+        </Label>
+    </Frame>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="5"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="5"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+<!--            <RowDefinition Height="5"></RowDefinition>
+            <RowDefinition></RowDefinition>
+-->
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Grid.Column="1" TextColor="#808080"     FontSize="Small" Text="Guest name"></Label>
+        <Label Grid.Row="1" Grid.Column="1" TextColor="#808080"     FontSize="Small" Text="Items in bill"></Label>
+        <Label Grid.Row="2" Grid.Column="1" TextColor="#808080"     FontSize="Small" Text="Sub total"></Label>
+        <Label Grid.Row="3" Grid.Column="1" TextColor="#808080"     FontSize="Small" Text="Tax"></Label>
+        <Label Grid.Row="4" Grid.Column="1" TextColor="#808080"     FontSize="Small" Text="Gratuity"></Label>
+<!--        <Label Grid.Row="6" Grid.Column="1" TextColor="#808080"     FontSize="Medium" FontAttributes="Bold"  Text="Total"></Label>
+-->
+        <Label x:Name="txtPOSSubmit_GuestName" Grid.Row="0" Grid.Column="3" TextColor="#303030" FontSize="Small"  FontAttributes="Bold"></Label>
+        <Label x:Name="txtPOSSubmit_ItemsOrdered" Grid.Row="1" Grid.Column="3" TextColor="#303030" FontSize="Small"   FontAttributes="Bold"></Label>
+        <Label x:Name="txtPOSSubmit_SubTotal" Grid.Row="2" Grid.Column="3" TextColor="#303030" FontSize="Small"   FontAttributes="Bold"></Label>
+        <Label x:Name="txtPOSSubmit_Tax" Grid.Row="3" Grid.Column="3" TextColor="#303030"  FontSize="Small"   FontAttributes="Bold"></Label>
+        <Label x:Name="txtPOSSubmit_Gratuity" Grid.Row="4" Grid.Column="3" TextColor="#303030"  FontSize="Small"   FontAttributes="Bold"></Label>
+<!--        <Label x:Name="txtPOSSubmit_Total" Grid.Row="6" Grid.Column="3" TextColor="#303030"  FontSize="Medium"    FontAttributes="Bold"></Label>
+-->
+        </Grid>
+
+    <StackLayout Margin="5, 0">
+        <Button x:Name="btnSubmitToCloudbeds" Text="Submit to Cloudbeds" Clicked="btnSubmitToCloudbeds_Clicked" ></Button>
+        <Label x:Name="txtCloudbedsSubmitResponse" FontSize="12"></Label>
+    </StackLayout>
+
+
+</StackLayout>
