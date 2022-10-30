@@ -11,7 +11,7 @@ This project contains sample code (C#) for an application demonstrating how to u
     
     iv. You will need to Copy/Paste the contents if these XML files into the Mobile applications. If you are running the Android empulator you should be able to copy/paste right from your desktop into the Textbox of the mobile application and click the mobile-app button to parse an save these secrets-containing XML files onto the mobile debvice.  (If you are running on actual hardware devices, you can email yourself these 2 files and copy/paste them from the mobile device itself). You must do this for both the Application-Scecrets and the Session-Tokens; there is a botton on the mobile application home screen to help import each. 
     
-    **Result:** You will now be able to run THIS (CB-API-TinyPointOfSale) application and it will use these secrets to log into your Cloudbeds property
+    **Result:** You will now be able to run THIS (CB-API-TinyPointOfSale-Mobile-Devices-App) application and it will use these secrets to log into your Cloudbeds property
    
 
 
