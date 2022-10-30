@@ -53,19 +53,61 @@ class CloudbedsGuestManager
     }
 
     /// <summary>
+    /// If we do not have cached data, set up an aync job to request it
+    /// </summary>
+    public void EnsureCachedData_Async()
+    {
+        //If we have cached data, there is nothing to do...
+        if (_cachedData != null)
+        {
+            return;
+        }
+
+        CloudbedsSingletons.StatusLogs.AddStatus("1030-1146: Starting Async request(s) to warm up Cloudbeds query data cache");
+
+        //Run the job async to request we fill the cache
+        System.Threading.Tasks.Task.Run(() => this.EnsureCachedData());
+    }
+
+    /// <summary>
+    /// Thread synchronization lick.  We use this to create a critical section
+    /// that prevents is from performing a cache-query to fill the Guests cache
+    /// if that query is already underway
+    /// </summary>
+    object _syncLockForGuestCacheQuery = new object();
+
+
+    /// <summary>
     /// Queries for guests, if needed
     /// </summary>
     /// <exception cref="Exception"></exception>
     public void EnsureCachedData()
     {
-        //Success
+        //If we have cached data, there is nothing to do...
         if(_cachedData != null)
         {
             return;
         }
 
-        ForceRefreshOfCachedData();
+        //==========================================================================
+        //If another thread is already running this code, let it finish first
+        //because it is ALREDY getting the data we want
+        //==========================================================================
+        lock (_syncLockForGuestCacheQuery)
+        {
+            //======================================================================
+            //Since another thread may have just completed this call - check againg
+            //when we are in the lock, it ensure we dont re-query the data unncessarily
+            if (_cachedData != null)
+            {
+                return;
+            }
+
+            //We don't have the data yet... so go ahead and re-query
+            ForceRefreshOfCachedData();
+        }//end: Lock
     }
+
 
     /// <summary>
     /// Get the latest data in the cache
@@ -81,23 +123,33 @@ class CloudbedsGuestManager
         {
             //Create simulated data
             queriedGuests = Testing_CreateSimulatedGuestData();
+            _cachedData = new CachedData(queriedGuests, queryTime);
+            return;
         }
-        else //Query the real data...
-        {
-            var cbQueryGuests = new CloudbedsRequestCurrentGuests(_cbServerInfo, _authSession, _statusLog);
-            var querySuccess = cbQueryGuests.ExecuteRequest();
-            if (!querySuccess)
-            {
-                throw new Exception("1021-825: CloudbedsGuestManager, query failure");
-            }
 
-            queriedGuests = cbQueryGuests.CommandResults_Guests;
-            IwsDiagnostics.Assert(queriedGuests != null, "1021-826: Expected query results");
-        }
+        queriedGuests = helper_SynchronouEnsureGuestData();
 
         //Store the cached results
         _cachedData = new CachedData(queriedGuests, queryTime);
+    }
 
+    /// <summary>
+    /// Query for the guest data.  Ensure that only one query can occur at a time
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    private ICollection<CloudbedsGuest> helper_SynchronouEnsureGuestData()
+    {
+        var cbQueryGuests = new CloudbedsRequestCurrentGuests(_cbServerInfo, _authSession, _statusLog);
+        var querySuccess = cbQueryGuests.ExecuteRequest();
+        if (!querySuccess)
+        {
+            throw new Exception("1021-825: CloudbedsGuestManager, query failure");
+        }
+
+        var queriedGuests = cbQueryGuests.CommandResults_Guests;
+        IwsDiagnostics.Assert(queriedGuests != null, "1021-826: Expected query results");
+        return queriedGuests;
     }
 
 

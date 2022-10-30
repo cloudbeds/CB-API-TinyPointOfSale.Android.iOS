@@ -13,13 +13,9 @@ namespace CloudbedsTinyPOS_Mobile
     public partial class MainPage : ContentPage
     {
         PosOrderManager _currentPosOrderManger = null;
-        PosItemManager _posItemManager = null;
         //What Guest has been selected in the UI presently?
         CloudbedsGuest _currentSelectedGuest = null;
-        ICloudbedsAuthSessionBase _currentAuthSession;
-        ICloudbedsServerInfo _currentServerInfo;
-        CloudbedsGuestManager _currentGuestManager;
-
+        //CloudbedsGuestManager _currentGuestManager;
 
         /// <summary>
         /// States we can be in
@@ -158,7 +154,7 @@ namespace CloudbedsTinyPOS_Mobile
                     return;
 
                 case NavState.PosChooseGuest:
-                    var guestManager = EnsureGuestManager();
+                    var guestManager = CloudbedsSingletons.CloudbedsGuestManager;
                     guestManager.EnsureCachedData();
                     var ctlChooseGuest = new uiGuestList(guestManager.Guests);
                     ctlChooseGuest.SelecedGuest = _currentSelectedGuest;
@@ -251,7 +247,7 @@ namespace CloudbedsTinyPOS_Mobile
 
 
             //Make sure we are signed in...
-            EnsureSignedIn();
+            //EnsureSignedIn();
 
             //===============================================================
             //Post the order up to the server
@@ -259,9 +255,9 @@ namespace CloudbedsTinyPOS_Mobile
             var statusLogs = TaskStatusLogsSingleton.Singleton;
 
             var postCharge = new CloudbedsPostChargeToGuest(
-                _currentServerInfo,
-                _currentAuthSession,
-                TaskStatusLogsSingleton.Singleton,
+                CloudbedsSingletons.CloudbedsServerInfo,
+                CloudbedsSingletons.CloudbedsAuthSession,
+                CloudbedsSingletons.StatusLogs,
                 selectedGuest,
                 posOrderManager);
 
@@ -468,50 +464,6 @@ namespace CloudbedsTinyPOS_Mobile
             #region "Ensure XXXXXXX"
             
             /// <summary>
-            /// Creates a guest manager object if necessary
-            /// </summary>
-            /// <returns></returns>
-            private CloudbedsGuestManager EnsureGuestManager()
-            {
-                EnsureSignedIn();
-
-                var guestManager = _currentGuestManager;
-                if (guestManager != null)
-                {
-                    return guestManager;
-                }
-
-                var taskStatus = TaskStatusLogsSingleton.Singleton;
-
-                var authSession = _currentAuthSession;
-                var serverInfo = _currentServerInfo;
-                if ((authSession == null) || (serverInfo == null))
-                {
-                    taskStatus.AddError("1021-835: No auth/server session");
-                    throw new Exception("1021-835: No auth/server session");
-                }
-
-                guestManager = new CloudbedsGuestManager(serverInfo, authSession, taskStatus);
-                _currentGuestManager = guestManager;
-                return guestManager;
-            }
-            
-
-            /// <summary>
-            /// Create/Load an item manager, if needed
-            /// </summary>
-            /// <returns></returns>
-            private PosItemManager EnsurePointOfSale_ItemManager()
-            {
-                if (_posItemManager == null)
-                {
-                    _posItemManager = new PosItemManager();
-                }
-
-                return _posItemManager;
-            }
-
-            /// <summary>
             /// Create an order manager if we need one
             /// </summary>
             /// <returns></returns>
@@ -526,6 +478,7 @@ namespace CloudbedsTinyPOS_Mobile
 
                 return orderManager;
             }
+        
 
         /// <summary>
         /// Ensures we have a cachced version of the Order entry UI availalbe
@@ -540,107 +493,13 @@ namespace CloudbedsTinyPOS_Mobile
             };
 
             ctl = new uiPosOrderList();
-            ctl.FillPosOrderItemsList(EnsurePointOfSale_ItemManager());
+            ctl.FillPosOrderItemsList(CloudbedsSingletons.PointOfSaleItemManager);
             _cachedUi_uiOrderManager = ctl;
             return ctl;
 
         }
 
-        
-        /// <summary>
-        /// Ensure we are signed in
-        /// </summary>
-        private void EnsureSignedIn()
-        {
-            if (_currentAuthSession != null)
-            {
-                return;
-            }
-
-            var statusLogs = TaskStatusLogsSingleton.Singleton;
-
-            try
-            {
-                LoadUserAuthTokenFromStorage(statusLogs);
-            }
-            catch (Exception ex)
-            {
-                statusLogs.AddError("220725-803: Error loading or validating persisted token: " + ex.Message); ;
-            }
-        }
         #endregion
-
-        /// <summary>
-        /// Loads a token from persisted storage
-        /// </summary>
-        /// <param name="statusLogs"></param>
-        /// <exception cref="NotImplementedException"></exception>
-        private void LoadUserAuthTokenFromStorage(TaskStatusLogs statusLogs)
-        {
-            statusLogs.AddStatusHeader("Load Auth Tokens from storage");
-
-            //=================================================================================
-            //If we are using simlated data -- create it here...
-            //=================================================================================
-            if (AppSettings.UseSimulatedGuestData)
-            {
-                _currentAuthSession = new CloudbedsAuthSession_OAuth(
-                    new OAuth_RefreshToken("FAKE REFRESH TOKEN:xxxxxxxxx"),
-                    new OAuth_AccessToken("FAKE ACCESS TOKEN:yyyyyyyyy"),
-                    DateTime.Today.AddYears(2),
-                    TaskStatusLogsSingleton.Singleton);
-
-                _currentServerInfo = CloudbedsAppConfig.TESTING_CreateSimulatedAppConfig();
-                return;
-            }
-
-            //=================================================================================
-            //Load our secrets and create an authentication session...
-            //=================================================================================
-
-            var filePathToPersistedToken = AppSettings.LoadPreference_PathUserAccessTokens();
-            if (!System.IO.File.Exists(filePathToPersistedToken))
-            {
-                statusLogs.AddError("220825-805: Auth token file does not exist: " + filePathToPersistedToken);
-                throw new Exception("220825-805: Auth token file does not exist: " + filePathToPersistedToken);
-            }
-
-
-            var filePathToAppSecrets = AppSettings.LoadPreference_PathAppSecretsConfig();
-            if (!System.IO.File.Exists(filePathToAppSecrets))
-            {
-                statusLogs.AddError("220825-814: App secrets file does not exist: " + filePathToAppSecrets);
-                throw new Exception("220825-814805: App secrets file does not exist: " + filePathToAppSecrets);
-            }
-            //----------------------------------------------------------
-            //Load the application-global configuration from storage
-            //(we need to to refresh the token)
-            //----------------------------------------------------------
-            var appConfigAndSecrets = CloudbedsAppConfig.FromFile(filePathToAppSecrets);
-            _currentServerInfo = appConfigAndSecrets;
-
-            //----------------------------------------------------------
-            //Load the authentication secrets from storage
-            //----------------------------------------------------------
-            CloudbedsTransientSecretStorageManager authSecretsStorageManager =
-                CloudbedsTransientSecretStorageManager.LoadAuthTokensFromFile(filePathToPersistedToken, appConfigAndSecrets, true, statusLogs);
-
-            var authSession = authSecretsStorageManager.AuthSession;
-            //Sanity test
-            if (authSession == null)
-            {
-                statusLogs.AddError("220725-229: No auth session returned");
-            }
-            else
-            {
-                statusLogs.AddStatus("Successfully loaded auth token from storage");
-            }
-
-            //--------------------------------------------------------------------
-            //Store this at the class' level, so that it can be used by other calls
-            //--------------------------------------------------------------------
-            _currentAuthSession = authSession;
-        }
 
 
         /// <summary>
@@ -661,6 +520,15 @@ namespace CloudbedsTinyPOS_Mobile
         {
             //Show the navigation controls to move between Point of Sale steps
             groupNavPreviousNext.IsVisible = true;
+
+            //=======================================================================
+            //Start the query of any data (e.g. lists of guests) that we are are
+            //going to need in the Point of Sale workflow.  This will help reduce
+            //any time lag in going to screens that need this data, since it will have
+            //already been fetched (or is being fetched) by the time the user gets to 
+            //these screens
+            //=======================================================================
+            CloudbedsSingletons.WarmUpCloudbedsDataCachesIfNeeded_Async();
 
             //Start the Point of Sale workflow
             StateMachine_PerformTransition(_navState, NavState.PosChooseMenuItemsForOrder);

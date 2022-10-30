@@ -8,9 +8,7 @@
     </Frame>    
     
     <StackLayout x:Name="spListOfGuests">
-        <Label FontSize="Small" Text="fill me: list of GUESTS"></Label>
-        <Label FontSize="Small" Text="fill me: list of GUESTS"></Label>
-        <Label FontSize="Small" Text="fill me: list of GUESTS"></Label>
+        <Label FontAttributes="Italic" TextColor="#c0c0c0" FontSize="Small" Text="Querying data...please stand by"></Label>
     </StackLayout>
 
 </StackLayout>

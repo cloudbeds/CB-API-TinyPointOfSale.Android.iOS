@@ -9,7 +9,7 @@
     </Frame>
 
     <StackLayout Margin="5, 0">
-        <Button x:Name="btnResetPOS" Text="Reset POS Order" Clicked="btnResetPOS_Clicked" ></Button>
+        <Button x:Name="btnResetPOS" Text="Start New POS Order" Clicked="btnResetPOS_Clicked" ></Button>
         <Label x:Name="txtResetResponse" FontSize="12"></Label>
     </StackLayout>
 

@@ -8,7 +8,7 @@
     </Frame>
 
     <StackLayout x:Name="spListOfPosOrderItems" Padding="0" Margin="0">
-        <Label Text="fill me: list of menu items here"></Label>
+        <Label FontAttributes="Italic" TextColor="#c0c0c0" FontSize="Small" Text="Querying data...please stand by"></Label>
     </StackLayout>
 
 </StackLayout>
