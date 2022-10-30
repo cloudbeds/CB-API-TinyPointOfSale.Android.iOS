@@ -1,5 +1,5 @@
 # CB-API-TinyPointOfSale-Mobile-Devices-App
-This project contains sample code (C#) for an application demonstrating how to use the APIs needed for Point of Sale application that integrates with Cloudbeds. The application is targeted at Android and iOS plaforms and written in C# (it uses the Xamarin mobile app framework which can be installed on top of Visual Studio).
+This project contains sample code (C#) for an application demonstrating how to use the APIs needed for a Point of Sale application that integrates with Cloudbeds. The application is targeted at Android and iOS plaforms and written in C# (it uses the Xamarin mobile app framework which can be installed on top of Visual Studio).
 
 1. To use this application you will need to FIRST use the **CB-API-Explorer** (https://github.com/cloudbeds/CB-API-Explorer) sample to create an XML file that contains the access tokens (i.e. secrets) this application uses to log into your Cloudbeds property:
 
